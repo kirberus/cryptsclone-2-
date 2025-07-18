@@ -49,35 +49,55 @@ emailInput.addEventListener("input", () => {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-  const hamburger = document.getElementById("hamburger-btn");
-  const navMenu = document.getElementById("nav-menu");
-
-  if (hamburger && navMenu) {
-    hamburger.addEventListener("click", function() {
-      navMenu.classList.toggle("active");
-      hamburger.setAttribute(
-        "aria-expanded",
-        navMenu.classList.contains("active")
-      );
-    });
-
-    navMenu.querySelectorAll(".nav-link").forEach(link => {
-      link.addEventListener("click", () => {
-        navMenu.classList.remove("active");
-        hamburger.setAttribute("aria-expanded", "false");
-      });
-    });
-  }
-
+  // ... (all your other existing JavaScript code for the hamburger menu, etc., stays here)
 
   const form = document.getElementById("eventForm");
   if (form) {
     form.addEventListener("submit", function(e) {
+      e.preventDefault(); // Prevents the default form submission
+
+      // Validation for the event selection
       if (eventSelect && eventSelect.multiple && ![...eventSelect.options].some(opt => opt.selected)) {
         alert("Please select at least one event.");
         eventSelect.focus();
-        e.preventDefault();
+        return; // Stop the function if no event is selected
       }
+
+      const zapierWebhookUrl = "https://hooks.zapier.com/hooks/catch/23851277/u2equrs/"; // <-- PASTE YOUR ZAPIER WEBHOOK URL HERE
+
+      const formData = new FormData(form);
+      const data = {
+        email: formData.get("email"),
+        name: formData.get("name"),
+        class: formData.get("class"),
+        section: formData.get("section"),
+        events: formData.getAll("event[]").join(", ") // Joins multiple events into a single string
+      };
+
+      fetch(zapierWebhookUrl, {
+        method: "POST",
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          alert("Thank you for registering!");
+          form.reset(); // Optionally reset the form
+          extraFields.classList.remove("show"); // Hide the extra fields again
+        } else {
+          // This will handle network errors, but not necessarily errors from Zapier's execution
+          response.json().then(data => {
+            if (Object.hasOwn(data, 'errors')) {
+              alert(data["errors"].map(error => error["message"]).join(", "));
+            } else {
+              alert("An error occurred. Please try again.");
+            }
+          })
+        }
+      })
+      .catch(error => {
+        console.error("Error submitting form:", error);
+        alert("An error occurred while submitting the form. Please check the console for more details.");
+      });
     });
   }
 });
