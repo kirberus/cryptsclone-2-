@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - Crypts 2025</title>
+  <link rel="stylesheet" href="regc.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Space+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html#home" class="nav-brand">
+        <img src="assets/navbar_logo.jpg" alt="Crypts 4.0 Logo" class="logo" />
+        <span>Crypts 4.0</span>
+      </a>
+      <button class="hamburger" id="hamburger-btn" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html#home" class="nav-link">Home</a></li>
+        <li><a href="index.html#organizers" class="nav-link">Organizers</a></li>
+        <li><a href="index.html#brochure" class="nav-link">Brochure</a></li>
+        <li><a href="index.html#calendar" class="nav-link">Calendar</a></li>
+        <li><a href="index.html#location" class="nav-link">Location</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="form-container">
+    <h1>Crypts 4.0 Registration</h1>
+    <form action="https://formspree.io/f/mldnjbgn" method="POST" id="eventForm">
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+      </div>
+
+      <div id="extra-fields" class="extra-group">
+        <div class="fade-field form-field" style="--order: 1;">
+          <label for="name">Name</label>
+          <input type="text" name="name" id="name" required>
+        </div>
+
+        <div class="fade-field form-field" style="--order: 2;">
+          <label for="class">Class</label>
+          <select name="class" id="class" required>
+            <option value="">Select your class</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+        </div>
+
+        <div class="fade-field form-field" style="--order: 3;">
+          <label for="section">Section</label>
+          <input type="text" name="section" id="section" required placeholder="Ex: A, B, C">
+        </div>
+
+        <div class="fade-field form-field" style="--order: 4;">
+          <label for="event">Event</label>
+          <select name="event[]" id="event" multiple required>
+            <option value="">Select class first</option>
+          </select>
+          <small><i>Hold Ctrl (Windows) or Cmd (Mac) to select multiple events.</i></small>
+        </div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  
+  <script src="regj.js"></script>
+</body>
+</html>
